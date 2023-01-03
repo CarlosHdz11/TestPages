@@ -24,8 +24,8 @@ createCard()
                 let humidity = totalData.main.humidity;
                 let pressure = totalData.main.pressure;
                 let name = totalData.name;
-                let feelsLikeUndecimal = totalData.main.feels_like;
-                let feelsLike= feelsLikeUndecimal.toFixed(2)-232;
+                let feelsLikeUndecimal = totalData.main.feels_like-(232);
+                let feelsLike= feelsLikeUndecimal.toFixed(2);
                 //let feelsLike = totalData.main.feels_like;
                 let wind=totalData.wind.speed;
                 let temperatureUndecimal = totalData.main.temp-(232);
@@ -46,7 +46,7 @@ createCard()
                 let description = value.description;
                 
 
-                fetchIde = await fetch(` http://openweathermap.org/img/wn/${ide}@2x.png`);
+                fetchIde = await fetch(` https://openweathermap.org/img/wn/${ide}@2x.png`);
                 let useIcon= fetchIde.url;
                 let imgIcon=`<img src="${useIcon}" class="img-fluid" style="width: 300px; height: 300px; border-radius: 50%;">`
                
@@ -201,7 +201,7 @@ async function getCity() {
     let description = value.description;
     
 
-    fetchIde = await fetch(` http://openweathermap.org/img/wn/${ide}@2x.png`);
+    fetchIde = await fetch(` https://openweathermap.org/img/wn/${ide}@2x.png`);
     let useIcon= fetchIde.url;
     let imgIcon=`<img src="${useIcon}" class="img-fluid" style="width: 300px; height: 300px; border-radius: 50%;">`
    
