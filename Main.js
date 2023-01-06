@@ -1,61 +1,58 @@
-let plantilla="";
+let plantilla = "";
 
 //  function getCity() {
 
 //         let getCity = document.getElementById("getCity").value;
 //         console.log(getCity)
 createCard()
-    
+
 //     }
- 
+
+
+async function createCard() {
+    fetchOne = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=san salvador&lang=sp&appid=40553e6dba61311d589a3aa4da37c88d`)
+    let data = await fetchOne.json();
+
+
+
+
+    // .then(response => response.json())
+    // .then((data) => {
+
+    let totalData = data;
+    console.log(totalData);
+    let humidity = totalData.main.humidity;
+    let pressure = totalData.main.pressure;
+    let name = totalData.name;
+    let feelsLikeUndecimal = totalData.main.feels_like - (273.15);
+    let feelsLike = feelsLikeUndecimal.toFixed(2);
+    let wind = totalData.wind.speed;
+    let temperatureUndecimal = totalData.main.temp - (273.15);
+    let temperature = temperatureUndecimal.toFixed(2);
     
-    async function createCard() {
-        fetchOne = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=san salvador&lang=sp&appid=40553e6dba61311d589a3aa4da37c88d`)
-        let data = await fetchOne.json();
 
-        
 
-    
-            // .then(response => response.json())
-            // .then((data) => {
-                
-                let totalData=data;
-                console.log(totalData);
-                let humidity = totalData.main.humidity;
-                let pressure = totalData.main.pressure;
-                let name = totalData.name;
-                let feelsLikeUndecimal = totalData.main.feels_like-(232);
-                let feelsLike= feelsLikeUndecimal.toFixed(2);
-                //let feelsLike = totalData.main.feels_like;
-                let wind=totalData.wind.speed;
-                let temperatureUndecimal = totalData.main.temp-(232);
-                let temperature=temperatureUndecimal.toFixed(2);
-                // let temperature = totalData.main.temp;
-                // console.log(temperature);
-                
+    let country = totalData.sys.country;
+    console.log(country);
 
-                
-                let country=totalData.sys.country;
-                console.log(country);
+    let dataWeather = data.weather;
+    const mapResult = Object.keys(dataWeather).map(async key => {
+        const value = dataWeather[key]
 
-                let dataWeather=data.weather;
-              const mapResult =Object.keys(dataWeather).map(async key=>{
-                const value = dataWeather[key]
+        let ide = value.icon;
+        let description = value.description;
 
-                let ide=value.icon;
-                let description = value.description;
-                
 
-                fetchIde = await fetch(` https://openweathermap.org/img/wn/${ide}@2x.png`);
-                let useIcon= fetchIde.url;
-                let imgIcon=`<img src="${useIcon}" class="img-fluid" style="width: 300px; height: 300px; border-radius: 50%;">`
-               
-                
-                plantilla = `
-<div class="row"  >
-            <div class="w-100 " style="height:690px; background-color: #1a1b2e;">
+        fetchIde = await fetch(` https://openweathermap.org/img/wn/${ide}@2x.png`);
+        let useIcon = fetchIde.url;
+        let imgIcon = `<img src="${useIcon}" class="img-fluid" style="width: 300px; height: 300px; border-radius: 50%;">`
+
+
+        plantilla = `
+<div class="row">
+            <div class="w-100 ">
                 <div class="d-flex justify-content-center mt-5"  style="height:38rem" >
-                <div  id="hide">
+                <div class="mt-1"  id="hide">
                     <div class="card d-flex justify-content-center mt-1">
                         <div  style="width: 35rem; height: 150px;" class="d-flex justify-content-center ">
                           ${imgIcon}
@@ -64,13 +61,13 @@ createCard()
                         <div class="d-flex justify-content-center">
                         <div d-block>
                          <div class="d-flex justify-content-center">
-                         <h1 class="fw-bold" style="font-size: 30px;">${`${temperature} C°`}</h1>
+                         <h1 class="fw-bold" style="font-size: 30px;">${`${temperature} °C`}</h1>
                          </div>
                          <div class="d-flex justify-content-center">
                          <h4 class="card-title fst-italic"> &nbsp ${description}</h4>
                          </div>
                          <div class="d-flex justify-content-center">
-                         <h5 class="card-title fw-lighter"> &nbsp &nbsp ${name}</h5>
+                         <h5 class="card-title fw-lighter"> &nbsp &nbsp ${name} (${country})</h5>
                          </div>
                            
                         </div>
@@ -114,7 +111,7 @@ createCard()
                                     </div>
                                     <div class="ml-2">
                                         <div class="">Sensación real</div>
-                                        <div>${`${feelsLike} C°`}</div>
+                                        <div>${`${feelsLike} °C`}</div>
                                     </div>
                                 </div>
                                 <div class="d-flex m-1">
@@ -147,70 +144,78 @@ createCard()
                 </div>
             </div>
         </div>
-
+</div>
 `
 
-let container= document.getElementById('container')
-container.innerHTML=plantilla;
+        let container = document.getElementById('container')
+        container.innerHTML = plantilla;
 
 
 
-            
-    
-            
-           
-            })
 
-           
-    
-    }
+
+
+
+    })
+
+
+
+}
 
 async function getCity() {
-    plantillaTWO=" ";
-    document.getElementById('hide').style.display="none";
+    plantillaTWO = " ";
+    
     let getCity = document.getElementById("getCity").value;
     console.log(getCity);
 
-    fetchSecond = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${getCity}&lang=sp&appid=40553e6dba61311d589a3aa4da37c88d`)
-    let dataTwo = await fetchSecond.json();
-
-    console.log(dataTwo);
-
-    let totalData=dataTwo;
-    console.log(totalData);
-    let humidity = totalData.main.humidity;
-    let name = totalData.name;
-    let pressure = totalData.main.pressure;
-    let feelsLikeUndecimal = totalData.main.feels_like;
-    let feelsLike= feelsLikeUndecimal.toFixed(2)-232;
-    let wind=totalData.wind.speed;
-    let temperatureUndecimal = totalData.main.temp-232;
-    let temperature=temperatureUndecimal.toFixed(2);
     
-    
+    if (getCity == "") {
+        alert("Campo Vacio")
+    } else {
+        document.getElementById('hide').style.display = "none";
+        SpinnerBody();
+        
 
-    
-    let country=totalData.sys.country;
-    console.log(country);
+        fetchSecond = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${getCity}&lang=sp&appid=40553e6dba61311d589a3aa4da37c88d`)
+        let dataTwo = await fetchSecond.json();
 
-    let dataWeather=dataTwo.weather;
-  const mapResult =Object.keys(dataWeather).map(async key=>{
-    const value = dataWeather[key]
+        console.log(dataTwo);
 
-    let ide=value.icon;
-    let description = value.description;
-    
+        let totalData = dataTwo;
+        console.log(totalData);
+        let humidity = totalData.main.humidity;
+        let name = totalData.name;
+        let pressure = totalData.main.pressure;
+        let feelsLikeUndecimal = totalData.main.feels_like;
+        let feelsLike = feelsLikeUndecimal.toFixed(2) - 273.15;
+        let wind = totalData.wind.speed;
+        let temperatureUndecimal = totalData.main.temp - 273.15;
+        let temperature = temperatureUndecimal.toFixed(2);
 
-    fetchIde = await fetch(` https://openweathermap.org/img/wn/${ide}@2x.png`);
-    let useIcon= fetchIde.url;
-    let imgIcon=`<img src="${useIcon}" class="img-fluid" style="width: 300px; height: 300px; border-radius: 50%;">`
-   
-    
- let   plantillaTWO = `
+
+
+
+        let country = totalData.sys.country;
+        console.log(country);
+
+        let dataWeather = dataTwo.weather;
+        const mapResult = Object.keys(dataWeather).map(async key => {
+            const value = dataWeather[key]
+
+            let ide = value.icon;
+            let description = value.description;
+
+
+            fetchIde = await fetch(` https://openweathermap.org/img/wn/${ide}@2x.png`);
+            let useIcon = fetchIde.url;
+            let imgIcon = `<img src="${useIcon}" class="img-fluid" style="width: 300px; height: 300px; border-radius: 50%;">`
+
+
+            let plantillaTWO = `
 <div class="row"  >
-<div class="w-100 " style="height:690px; background-color: #1a1b2e;">
+<div class="w-100" style="height:1000px; background-color: #1a1b2e;">
     <div class="d-flex justify-content-center mt-5"  style="height:38rem" >
-    <div  id="hide">
+    <div class="mt-1"  id="hide">
         <div class="card d-flex justify-content-center">
             <div  style="width: 35rem; height: 150px;" class="d-flex justify-content-center ">
               ${imgIcon}
@@ -219,13 +224,13 @@ async function getCity() {
                 <div class="d-flex justify-content-center">
                     <div d-block>
                      <div class="d-flex justify-content-center">
-                     <h1 class="fw-bold" style="font-size: 30px;">${`${temperature} C°`}</h1>
+                     <h1 class="fw-bold" style="font-size: 30px;">${`${temperature} °C`}</h1>
                      </div>
                      <div class="d-flex justify-content-center">
                      <h4 class="card-title fst-italic"> &nbsp ${description}</h4>
                      </div>
                      <div class="d-flex justify-content-center">
-                     <h5 class="card-title fw-lighter"> &nbsp &nbsp ${name}</h5>
+                     <h5 class="card-title fw-lighter"> &nbsp &nbsp ${name} (${country})</h5>
                      </div>
                        
                     </div>
@@ -269,7 +274,7 @@ async function getCity() {
                         </div>
                         <div class="ml-2">
                             <div class="">Sensación real</div>
-                            <div>${`${feelsLike} C°`}</div>
+                            <div>${`${feelsLike} °C`}</div>
                         </div>
                     </div>
                     <div class="d-flex m-1">
@@ -305,48 +310,31 @@ async function getCity() {
 
 `
 
-let container= document.getElementById('container')
-container.innerHTML=plantillaTWO;
+
+            let container = document.getElementById('container')
+            container.innerHTML = plantillaTWO;
+
+        })
+    }
+
+}
+
+function SpinnerBody() {
+
+
+    let plantillaThree = `<div class="mt-5 d-flex justify-content-center align-items-center" >
+    <div class="spinner-border text-danger" role="status" width="60px" height="60px">
+    <span class="visually-hidden"></span>
+  </div>
+  </div>
+`
+    let container = document.getElementById('container')
+    container.innerHTML = plantillaThree;
+
+}
 
 
 
 
-
-
-
-})
-
-
-    
-    
-
-
-
-
-
-
-
-//     createCard(getCity)
-
- }
-
-// function createCard(City) {
-//     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=40553e6dba61311d589a3aa4da37c88d`)
-//         .then(response => response.json())
-//         .then((data) => {
-//             dataWeather=data.weather;
-//             // console.log(dataWeather);
-//           const mapResult =Object.keys(dataWeather).map(key=>{
-//             const value = dataWeather[key]
-//             console.log(value.icon)
-               
-//             })
-            
-
-
-       
-//         })
-
-// }
 
 
