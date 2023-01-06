@@ -10,6 +10,8 @@ createCard()
 
 
 async function createCard() {
+
+    SpinnerBody();
     fetchOne = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=san salvador&lang=sp&appid=40553e6dba61311d589a3aa4da37c88d`)
     let data = await fetchOne.json();
 
@@ -49,9 +51,10 @@ async function createCard() {
 
 
         plantilla = `
+        <h1 class="text-center mt-2" style="color: white;">App del clima</h1>    
 <div class="row">
             <div class="w-100 ">
-                <div class="d-flex justify-content-center mt-5"  style="height:38rem" >
+                <div class="d-flex justify-content-center mt-1"  style="height:38rem" >
                 <div class="mt-1"  id="hide">
                     <div class="card d-flex justify-content-center mt-1">
                         <div  style="width: 35rem; height: 150px;" class="d-flex justify-content-center ">
@@ -60,7 +63,7 @@ async function createCard() {
                         <div class="card-body mt-5">
                         <div class="d-flex justify-content-center">
                         <div d-block>
-                         <div class="d-flex justify-content-center">
+                         <div class="d-flex justify-content-center mt-3">
                          <h1 class="fw-bold" style="font-size: 30px;">${`${temperature} °C`}</h1>
                          </div>
                          <div class="d-flex justify-content-center">
@@ -132,11 +135,11 @@ async function createCard() {
                                 <span class="input-group-text" id="basic-addon1"><i>
                                         <ion-icon name="cloud-circle-outline"></ion-icon>
                                     </i></span>
-                                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                                <input type="text" class="form-control" placeholder="Escribir el nombre de la ciudad" aria-label="Username"
                                     aria-describedby="basic-addon1" id="getCity">
                             </div>
                             <div class="d-flex justify-content-center mt-1 ">
-                                <a href="#" class="btn btn-primary" onclick="getCity()">Search City</a>
+                                <a href="#" class="btn btn-primary" onclick="getCity()">Buscar Ciudad</a>
                             </div>
                         </div>
                     </div>
@@ -208,13 +211,15 @@ async function getCity() {
 
             fetchIde = await fetch(` https://openweathermap.org/img/wn/${ide}@2x.png`);
             let useIcon = fetchIde.url;
-            let imgIcon = `<img src="${useIcon}" class="img-fluid" style="width: 300px; height: 300px; border-radius: 50%;">`
+            let imgIcon = `<img src="${useIcon}" class="img-fluid mb-1" style="width: 300px; height: 300px; border-radius: 50%;">`
 
 
             let plantillaTWO = `
+            <h1 class="text-center mt-2" style="color: white;">App del clima</h1>
 <div class="row"  >
+
 <div class="w-100" style="height:1000px; background-color: #1a1b2e;">
-    <div class="d-flex justify-content-center mt-5"  style="height:38rem" >
+    <div class="d-flex justify-content-center mt-1"  style="height:38rem" >
     <div class="mt-1"  id="hide">
         <div class="card d-flex justify-content-center">
             <div  style="width: 35rem; height: 150px;" class="d-flex justify-content-center ">
@@ -295,11 +300,11 @@ async function getCity() {
                     <span class="input-group-text" id="basic-addon1"><i>
                             <ion-icon name="cloud-circle-outline"></ion-icon>
                         </i></span>
-                    <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                    <input type="text" class="form-control" placeholder="Escribir el nombre de la ciudad" aria-label="Username"
                         aria-describedby="basic-addon1" id="getCity">
                 </div>
                 <div class="d-flex justify-content-center mt-1 ">
-                    <a href="#" class="btn btn-primary" onclick="getCity()">Search City</a>
+                    <a href="#" class="btn btn-primary" onclick="getCity()">Buscar Ciudad</a>
                 </div>
             </div>
         </div>
